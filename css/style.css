@@ -1,0 +1,75 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+aside {
+    margin-right: 100vh;
+    /* background-color: darkgrey; */
+    width: 10%;
+
+}
+
+.alphabet {
+    font-size: 0.8em;
+    display: flex;
+    align-content: center;
+    margin: 2vh;
+    /* padding: 5px; */
+    /* background-color: rgb(230, 228, 228); */
+    height: 20vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80%;
+}
+
+.leMot {
+
+    /* height: 20vh; */
+    /* background-color: antiquewhite; */
+    display: flex;
+    flex-direction: row;
+}
+
+.leMot span {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    margin: 5px;
+    height: 8vh;
+    width: 8vh;
+}
+
+
+.border {
+    margin: 5px;
+    width: 5vh;
+    height: 5vh;
+    /* background-color: gainsboro; */
+    border-bottom: solid black 2px;
+}
+
+
+.images {
+
+    /* background-color: antiquewhite; */
+}
+
+.images img {
+    height: 40vh;
+}
+
+.visible {
+    display: block;
+}
+
+.invisible {
+    display: none;
+}
