@@ -1,14 +1,28 @@
 body {
+
+    font-weight: 500;
+    background-color: #AA7A82;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 aside {
-    margin-right: 100vh;
-    /* background-color: darkgrey; */
-    width: 10%;
+    text-align: center;
+    background-color: #FFBFCA;
+    font-size: 1.8vh;
+    font-weight: 500;
+    margin: auto;
+    width: 22%;
+    border-radius: 15px;
 
+}
+
+
+h1 {
+    font-size: 3.5vh;
 }
 
 .alphabet {
@@ -27,9 +41,6 @@ aside {
 }
 
 .leMot {
-
-    /* height: 20vh; */
-    /* background-color: antiquewhite; */
     display: flex;
     flex-direction: row;
 }
@@ -41,29 +52,34 @@ aside {
     align-items: center;
 }
 
-input {
-    margin: 5px;
-    height: 8vh;
-    width: 8vh;
+.alphabet {
+    width: 55%;
 }
 
+input {
+    border-radius: 10px;
+    border: none;
+    margin: 5px;
+    height: 6vh;
+    width: 6vh;
+}
 
 .border {
     margin: 5px;
     width: 5vh;
     height: 5vh;
-    /* background-color: gainsboro; */
     border-bottom: solid black 2px;
 }
 
-
 .images {
-
-    /* background-color: antiquewhite; */
+    padding: 15px;
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
 }
 
+
 .images img {
-    height: 40vh;
+    height: 35vh;
 }
 
 .visible {
@@ -72,4 +88,17 @@ input {
 
 .invisible {
     display: none;
+}
+
+.btn {
+    background-color: #FFEFBF;
+    padding: 5px;
+    height: 6vh;
+    font-size: 2.5vh;
+    border-radius: 10px;
+    border: none;
+    width: 15%;
+    /* border-bottom: 1px solid; */
+    box-shadow: 0px 1px 5px 0px rgba(128, 128, 128, 0.622);
+    margin-bottom: 20px;
 }

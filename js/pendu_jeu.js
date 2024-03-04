@@ -1,92 +1,24 @@
 ////////////////////////////////////////IMPORT DU DICO ///////////////////////////////////////////
-
 import { words } from "./dico.js";
-
 ////////////////////////////////////////////DECLARATION CONSTANTE ET VARIABLE///////////////////////////////////////////////////////
 ///////////////////////////////////////////////// PROGRAMME PRINCIPAL -- Partie : Boucle while pour définir quand une boucle se termine ////////////////////////////////////////////////////////////////////////////////////
-
 const TENTATIVES_JOUEUR = 9;
-// let divImages = document.getElementsByClassName("images")
-let imageJeu = document.getElementsByTagName("img");
-let paragrapheSolution = document.createElement("p");
+let tentativesRestantes;
+let paragrapheSolution = document.createElement("p"); // permet d'afficher la solution quand je fais des tests c'est pour ça qu'il n'est pas utiliséé
 let tableauParagrapheMot = document.getElementById("leMot");
 let paragrapheMot = [];
-// let tentativesRestantes = document.getElementById("phrase");
 let inputAlphabet = document.getElementsByTagName("input")
-// let changerTentativesNb = document.getElementById("tentatives")
-// changerTentativesNb = TENTATIVES_JOUEUR
 let span;
-let imageVisible;
-let imageCachee;
 let motChoisi = Math.floor(Math.random() * words.length);
 let devineMot
-let nombreTours = 0;
-let test;
-
 let lettresDejaChoisies = [];
-
-let comparerLettre
-motChoisi = words[motChoisi]
+let compteurErreur = 0;
+let paragrapheMessage = document.createElement("p");
+let aside = document.getElementById("phrase")
+let image = document.querySelector(".visible")
+let imageWin = 11
 
 ///////////////////////////////////////////////////////// FONCTIONS /////////////////////////////////////////////////////////////////////////
-
-// const reset = () => {
-
-// }
-// reset()
-
-/* ------------------------------ Fonctions pour faire apparaître/disparaître image en fonction des propositions joueurs ------------------------------------- */
-// let testMessageFinPartie;
-
-const messageFinPartie = () => {
-    let reponse = 'test'
-    return reponse
-}
-// testMessageFinPartie = messageFinPartie()
-
-
-const faireApparaitreImage = (element, indice, attributUn) => {
-    element[indice - 1].setAttribute("class", attributUn)
-}
-
-const faireDisparaitreImage = (element, indice, attribut) => {
-    element[indice - 2].setAttribute("class", attribut)
-}
-
-
-
-// const gererImage = (texte, nombreTours) => {
-//     let messageFonction = texte;
-//     // for (let index = 0; index < nombreTours; index++) {
-//     // console.log(index)
-//     faireApparaitreImage(imageJeu, nombreTours + 1, "visible")
-//     faireDisparaitreImage(imageJeu, nombreTours, "invisible")
-//     // }
-//     return messageFonction
-// }
-
-
-// let texte = gererImage("bonjour", nombreTours)
-// console.log(gererImage(texte))
-
-
-for (let index = 1; index < nombreTours + 1; index++) {
-    faireApparaitreImage(imageJeu, index, "visible")
-    faireDisparaitreImage(imageJeu, index, "invisible")
-
-    console.log(" Photo tour : " + index)
-}
-
-imageVisible = faireApparaitreImage(imageJeu, 1, "visible");
-
-// // faireDisparaitreImage(imageJeu, 1, "invisible");
-// imageVisible = faireApparaitreImage(imageJeu, 1, "visible",);
-
-
-/* ------------------------------ Fin Fonctions pour faire apparaître/disparaître image en fonction des propositions joueurs ------------------------------------- */
-
-
-/* ------------------------------Fonctions pour remplacer lettres avec accent ------------------------------------- */
 const sansAccent = (str) => {
     let accent = [
         /[\300-\306]/g, /[\340-\346]/g, // A, a
@@ -103,33 +35,40 @@ const sansAccent = (str) => {
     }
     return str
 }
-/* ------------------------------Fin fonctions pour remplacer lettres avec accent ------------------------------------- */
+const btnRecommencer = () => {
+    let btnRecommencer
+    btnRecommencer = document.createElement('button')
+    document.body.appendChild(btnRecommencer)
+    btnRecommencer.setAttribute('class', 'btn')
+    btnRecommencer.textContent = "Recommencer"
+    btnRecommencer.addEventListener("click", () => {
+        window.location.reload();
+    })
+}
 
-//////////////////////////////////////////////////// FIN DES FONCTIONS //////////////////////////////////////////////////////////////////////
+const desacBtn = (btn) => {
+    btn.style.color = "grey";
+    btn.style.backgroundColor = "pink"
+    btn.style.border = "none";
+    btn.setAttribute('disabled', '')
+}
 
+//////////////////////////////////////////////////////////FIN FONCT////////////////////////////////////////////////////////////////////////////////////
 
-
-//////////////////////////////////////////////// Fin de la boucle while////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////  PROGRAMME PRINCIPAL --  Partie : Choix du mot à deviner --  /////////////////////////////////////////////////////////
-
-// imageVisible = faireApparaitreImage(imageJeu, 1 + 1, "visible")
-// imageCachee = faireDisparaitreImage(imageJeu, 1, "invisible")
-
-
-
-
-// LE MOT CHOISI DE MANIERE ALEATOIRE
-// N'a pas besoin d'être dans la boucle. Car initialisé AVANT que la partie commence vu que les 9 tours 
-
-
+image.src = `./images/1.png`
+motChoisi = words[motChoisi]
 motChoisi = sansAccent(motChoisi)
 motChoisi = motChoisi.toUpperCase()
 devineMot = motChoisi.split('')// mot à trouver
-// console.log(devineMot)
-document.body.append(paragrapheSolution)
-paragrapheSolution.textContent = motChoisi;
 
+tentativesRestantes = TENTATIVES_JOUEUR - compteurErreur;
+paragrapheMessage.textContent = `Nombres d'erreurs possibles : ${tentativesRestantes}`
+aside.append(paragrapheMessage)
+
+// Afficher la solution 
+// document.body.append(paragrapheSolution)
+// paragrapheSolution.textContent = motChoisi;
+/////
 devineMot.forEach(element => {
     span = document.createElement("span")
     span.setAttribute('class', 'border')
@@ -138,82 +77,57 @@ devineMot.forEach(element => {
     tableauParagrapheMot.append(span)
     if ((span.textContent === " ") || (span.textContent === "-") || (span.textContent === "'")) {
         span.style.borderBottom = 'none'
-
+        lettresDejaChoisies.push(element)
+        console.log(lettresDejaChoisies)
     } else {
         span.textContent = " "
-        console.log('enlever commentaire quand fini')
     }
 });
+for (const btnLettre of inputAlphabet) {
+    btnLettre.addEventListener('click', (event) => {
+        console.log(event.target.value)
+        desacBtn(btnLettre)
+        if (devineMot.includes(event.target.value)) {
 
-// 1- Boucle while pour le nombre de tentatives  lors d'une partie
-
-
-
-// do {
-
-// for (let index = 0; index < nombreTours; index++) {
-// faireApparaitreImage(imageJeu, index++, "visible")
-// faireDisparaitreImage(imageJeu, index, "invisible")
-// index++
-// //////// --- tentatives à paramètrer
-let tourRestant = TENTATIVES_JOUEUR - nombreTours
-console.log(nombreTours)
-let texteAside = " Il reste, " + tourRestant + " tours."
-console.log(texteAside)
-nombreTours++
-if (tourRestant === 0) {
-    console.log('Partie terminée')
-    nombreTours = 0;
-}
-
-////////////////////////////////////////////
-
-
-
-for (let i = 0; i < inputAlphabet.length; i++) {
-    // console.log(i)// console 26 boucles pour alphabet
-    // La partie ( les tentatives_joueurs  ) commencent au clic ???? ICI ????? Donc c'est ici que la boucle pour le tours devrait commencer. 
-    // La boucle ne devrait elle pas être avant l'event ?? 
-    inputAlphabet[i].addEventListener("click", () => {
-        if (inputAlphabet[i].type === "button") {
-            inputAlphabet[i].style.color = "grey";
-            inputAlphabet[i].style.backgroundColor = "pink"
-            inputAlphabet[i].style.border = "none";
-            inputAlphabet[i].setAttribute('disabled', '')
-            comparerLettre = document.createElement("span")
-            comparerLettre.append(inputAlphabet[i].value)
-            lettresDejaChoisies.push(inputAlphabet[i].value)
-            let trouveIndice = lettresDejaChoisies.indexOf(inputAlphabet[i].value)
-            let indiceLettresChoisies = trouveIndice
-            for (let j = 0; j < devineMot.length; j++) {
-                if (devineMot[j] === lettresDejaChoisies[indiceLettresChoisies]) {
-                    console.log('test')
-                    paragrapheMot[j].style.borderBottom = "none"
-                    console.log('test')
-                    paragrapheMot[j].textContent = lettresDejaChoisies[indiceLettresChoisies]
-                    paragrapheMot[j].style.borderBottom = " "
+            console.log("la lettre est dans le mot")
+            for (let i = 0; i < devineMot.length; i++) {
+                if (devineMot[i] === event.target.value) {
+                    console.log(event.target.value)
+                    paragrapheMot[i].style.borderBottom = "none"
+                    console.log(paragrapheMot)
+                    paragrapheMot[i].textContent = event.target.value
+                    paragrapheMot[i].style.borderBottom = " "
+                    lettresDejaChoisies.push(event.target.value)
                     console.log(lettresDejaChoisies)
                 }
             }
         }
+        else {
+            tentativesRestantes = TENTATIVES_JOUEUR - compteurErreur;
+            paragrapheMessage.textContent = `Nombres d'erreurs possibles restantes : ${tentativesRestantes - 1}`
+            aside.append(paragrapheMessage)
+            compteurErreur++
+            console.log(compteurErreur)
+            image.src = `./images/${compteurErreur + 1}.png`
+            // console.log("la lettre n'est pas dans le mot")
+        }
+        if (compteurErreur >= 9) {
+            paragrapheMessage.textContent = "Perdu ! Le mot était : " + motChoisi
+            for (const btnLettre of inputAlphabet) {
+                desacBtn(btnLettre)
+            }
+            btnRecommencer()
+        } else if (devineMot.length === lettresDejaChoisies.length && compteurErreur < 9) {
+            for (const btnLettre of inputAlphabet) {
+                desacBtn(btnLettre)
+            }
+            image.src = `./images/${imageWin}.png`
+            paragrapheMessage.textContent = "Bravo ! Vous avez gagné !"
+            aside.append(paragrapheMessage)
+            console.log("Gagné")
+            btnRecommencer()
+        }
+        console.log(devineMot)
     })
 }
 
-// } while (nombreTours < TENTATIVES_JOUEUR);
-
-
-
-
-
-
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-// let nombreTours = 0;
-// do {
-//     console.log("test")
-//     nombreTours++
-// } while (nombreTours < 9)
