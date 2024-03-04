@@ -48,7 +48,8 @@ const btnRecommencer = () => {
 
 const desacBtn = (btn) => {
     btn.style.color = "grey";
-    btn.style.backgroundColor = "pink"
+    btn.style.backgroundColor = "#876E91"
+    btn.style.color = "white"
     btn.style.border = "none";
     btn.setAttribute('disabled', '')
 }
