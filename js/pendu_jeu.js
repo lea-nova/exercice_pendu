@@ -1,10 +1,8 @@
-////////////////////////////////////////IMPORT DU DICO ///////////////////////////////////////////
 import { words } from "./dico.js";
-////////////////////////////////////////////DECLARATION CONSTANTE ET VARIABLE///////////////////////////////////////////////////////
-///////////////////////////////////////////////// PROGRAMME PRINCIPAL -- Partie : Boucle while pour définir quand une boucle se termine ////////////////////////////////////////////////////////////////////////////////////
+
 const TENTATIVES_JOUEUR = 9;
 let tentativesRestantes;
-let paragrapheSolution = document.createElement("p"); // permet d'afficher la solution quand je fais des tests c'est pour ça qu'il n'est pas utiliséé
+// let paragrapheSolution = document.createElement("p"); // permet d'afficher la solution quand je fais des tests
 let tableauParagrapheMot = document.getElementById("leMot");
 let paragrapheMot = [];
 let inputAlphabet = document.getElementsByTagName("input")
@@ -18,7 +16,6 @@ let aside = document.getElementById("phrase")
 let image = document.querySelector(".visible")
 let imageWin = 11
 
-///////////////////////////////////////////////////////// FONCTIONS /////////////////////////////////////////////////////////////////////////
 const sansAccent = (str) => {
     let accent = [
         /[\300-\306]/g, /[\340-\346]/g, // A, a
@@ -35,6 +32,7 @@ const sansAccent = (str) => {
     }
     return str
 }
+
 const btnRecommencer = () => {
     let btnRecommencer
     btnRecommencer = document.createElement('button')
@@ -54,14 +52,12 @@ const desacBtn = (btn) => {
     btn.setAttribute('disabled', '')
 }
 
-//////////////////////////////////////////////////////////FIN FONCT////////////////////////////////////////////////////////////////////////////////////
 
 image.src = `./images/1.png`
 motChoisi = words[motChoisi]
 motChoisi = sansAccent(motChoisi)
 motChoisi = motChoisi.toUpperCase()
 devineMot = motChoisi.split('')// mot à trouver
-
 tentativesRestantes = TENTATIVES_JOUEUR - compteurErreur;
 paragrapheMessage.textContent = `Nombres d'erreurs possibles : ${tentativesRestantes}`
 aside.append(paragrapheMessage)
@@ -69,7 +65,7 @@ aside.append(paragrapheMessage)
 // Afficher la solution 
 // document.body.append(paragrapheSolution)
 // paragrapheSolution.textContent = motChoisi;
-/////
+
 devineMot.forEach(element => {
     span = document.createElement("span")
     span.setAttribute('class', 'border')
@@ -79,39 +75,31 @@ devineMot.forEach(element => {
     if ((span.textContent === " ") || (span.textContent === "-") || (span.textContent === "'")) {
         span.style.borderBottom = 'none'
         lettresDejaChoisies.push(element)
-        console.log(lettresDejaChoisies)
     } else {
         span.textContent = " "
     }
 });
+// On écoute event sur les boutons représentant l'alphabet.
 for (const btnLettre of inputAlphabet) {
     btnLettre.addEventListener('click', (event) => {
-        console.log(event.target.value)
         desacBtn(btnLettre)
         if (devineMot.includes(event.target.value)) {
-
-            console.log("la lettre est dans le mot")
             for (let i = 0; i < devineMot.length; i++) {
                 if (devineMot[i] === event.target.value) {
-                    console.log(event.target.value)
                     paragrapheMot[i].style.borderBottom = "none"
-                    console.log(paragrapheMot)
                     paragrapheMot[i].textContent = event.target.value
                     paragrapheMot[i].style.borderBottom = " "
                     lettresDejaChoisies.push(event.target.value)
-                    console.log(lettresDejaChoisies)
                 }
             }
         }
         else {
             tentativesRestantes = TENTATIVES_JOUEUR - compteurErreur;
             paragrapheMessage.textContent = `Nombres d'erreurs possibles restantes : ${tentativesRestantes - 1}`
-            aside.append(paragrapheMessage)
             compteurErreur++
-            console.log(compteurErreur)
             image.src = `./images/${compteurErreur + 1}.png`
-            // console.log("la lettre n'est pas dans le mot")
         }
+
         if (compteurErreur >= 9) {
             paragrapheMessage.textContent = "Perdu ! Le mot était : " + motChoisi
             for (const btnLettre of inputAlphabet) {
@@ -124,11 +112,8 @@ for (const btnLettre of inputAlphabet) {
             }
             image.src = `./images/${imageWin}.png`
             paragrapheMessage.textContent = "Bravo ! Vous avez gagné !"
-            aside.append(paragrapheMessage)
-            console.log("Gagné")
             btnRecommencer()
         }
-        console.log(devineMot)
     })
+    console.log(devineMot)
 }
-

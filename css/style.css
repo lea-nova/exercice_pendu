@@ -14,10 +14,10 @@ aside {
     color: white;
     text-align: center;
     background-color: #796381;
-    font-size: 2vh;
+    font-size: 2.3vh;
     font-weight: 500;
     margin: auto;
-    width: 30%;
+    width: 25%;
     border-radius: 15px;
     margin-bottom: 10px;
 
@@ -111,8 +111,8 @@ input {
 
 @media screen and (max-width:1300px) {
     aside {
-        width: 50%;
-        font-size: 1.8vh;
+        width: 35%;
+        font-size: 1.5vh;
     }
 
     input {
@@ -153,7 +153,7 @@ input {
         font-size: 1.5vh;
         font-weight: 500;
         margin: auto;
-        width: 55%;
+        width: 45%;
         border-radius: 15px;
         margin-bottom: 10px;
 
@@ -166,7 +166,7 @@ input {
     }
 
     input {
-        font-size: 1.5vh;
+        font-size: 1.2vh;
         height: 6vh;
         width: 6vh;
         font-weight: 600;
@@ -217,7 +217,7 @@ input {
     aside {
         font-size: 1.5vh;
         font-weight: 500;
-        width: 85%;
+        width: 60%;
         border-radius: 15px;
         margin: 0;
         padding: 0;
