@@ -59,7 +59,7 @@ motChoisi = sansAccent(motChoisi)
 motChoisi = motChoisi.toUpperCase()
 devineMot = motChoisi.split('')// mot à trouver
 tentativesRestantes = TENTATIVES_JOUEUR - compteurErreur;
-paragrapheMessage.textContent = `Nombres d'erreurs possibles : ${tentativesRestantes}`
+paragrapheMessage.textContent = `Nombre de tentatives : ${tentativesRestantes}`
 aside.append(paragrapheMessage)
 
 // Afficher la solution 
@@ -95,7 +95,7 @@ for (const btnLettre of inputAlphabet) {
         }
         else {
             tentativesRestantes = TENTATIVES_JOUEUR - compteurErreur;
-            paragrapheMessage.textContent = `Nombres d'erreurs possibles restantes : ${tentativesRestantes - 1}`
+            paragrapheMessage.textContent = `Nombre de tentatives restantes : ${tentativesRestantes - 1}`
             compteurErreur++
             image.src = `./images/${compteurErreur + 1}.png`
         }
